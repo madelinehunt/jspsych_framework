@@ -6,3 +6,6 @@
 ** update survey_timeline() as needed
 ** update counter_and_debrief_timeline() as needed
 ** update demo_timeline() as needed
+
+
+* add experiment-specific variables and timeline functions

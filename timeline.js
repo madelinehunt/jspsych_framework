@@ -77,7 +77,7 @@ function survey_timeline(){
   return survey
 }
 
-// countermeasures timeline
+// countermeasures timeline (with optional debriefing)
 function counter_and_debrief_timeline(){
   var counter_timeline = []
 
@@ -163,7 +163,7 @@ function demo_timeline(){
 }
 
 //// pulling together all blocks into final main timeline
-function define_full_timeline(is_pilot) {
+function define_full_timeline() {
   var timeline = [];
   timeline.push(intro_timeline());
   timeline.push(survey_timeline());
