@@ -1,0 +1,8 @@
+* define which scripts to load in index.html
+* change basic vars in main.js
+* update save_data_and_debrief() in functions.js if needed
+* timeline.js:
+** update intro_timeline() as needed
+** update survey_timeline() as needed
+** update counter_and_debrief_timeline() as needed
+** update demo_timeline() as needed
