@@ -1,14 +1,14 @@
 //////// basic variables
 var subjID = getSubjID(8);
-var study // = 'mcv/kitchenSink'; CHANGEME
-var conds // example:
+var study; // = 'mcv/kitchenSink'; CHANGEME
+var conds; // example:
           // var conds = [
           //   {"cond": "[\"either\",1,0]" },
           //   {"cond": "[\"either\",1,1]" },
           // ];
           // note: depending on how your conditions are formatted,
           // you may need to modify local_counterbalancing() in functions.js
-var consent_file // = 'INL_behavioral_consent_45min_online.html'; // CHANGEME
+var consent_file; // = 'INL_behavioral_consent_45min_online.html'; // CHANGEME
 ////////
 
 //////// other expt options
