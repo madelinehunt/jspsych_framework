@@ -5,7 +5,7 @@ var instructions_default = {
   type:'instructions',
   show_clickable_nav: true,
   allow_keys: false,
-}
+};
 
 // demographics trials
 var demographics_default = {
@@ -22,7 +22,7 @@ var consent_default = {
     jsPsych.data.addProperties({'MID': mTurkID})
     jsPsych.data.addProperties({'Condition': condition[0]})
   }
-}
+};
 
 // countermeasures trial
 var countermeasures_default = {

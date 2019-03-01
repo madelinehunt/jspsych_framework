@@ -2,13 +2,13 @@
 
 // instructions
 function intro_and_consent_timeline(){
-  var intro_timeline = []
+  var intro_timeline = [];
 
   var consent_block = copy_default(consent_default);
   consent_block['consent'] = consent_file;
 
   var intro_instructions = copy_default(instructions_default);
-  intro_instructions['pages'] = ['<p>Welcome to the experiment']
+  intro_instructions['pages'] = ['<p>Welcome to the experiment.'];
 
   intro_timeline.push(consent_block);
   intro_timeline.push(intro_instructions);
@@ -18,13 +18,13 @@ function intro_and_consent_timeline(){
 
 // demographics timeline
 function demo_timeline(){
-  var demo_timeline = []
+  var demo_timeline = [];
 
   var demo_instructions = copy_default(instructions_default);
   demo_instructions['pages'] = [
     '<p>Lastly, we would like you to answer a couple of demographic questions.</p>' +
     '<p>Click "next" to proceed.</p>'
-  ]
+  ];
   demo_timeline.push(demo_instructions);
 
   var demo_trial = copy_default(demographics_default);
@@ -44,7 +44,7 @@ function demo_timeline(){
 
 // countermeasures timeline (with optional debriefing)
 function counter_and_debrief_timeline(){
-  var counter_timeline = []
+  var counter_timeline = [];
 
   var countermeasures = copy_default(countermeasures_default);
   counter_timeline.push(countermeasures);
@@ -73,6 +73,7 @@ function define_full_timeline() {
   var timeline = [];
   timeline.push(intro_and_consent_timeline());
   timeline.push(demo_timeline());
+  timeline.push(new_timeline());
   timeline.push(counter_and_debrief_timeline());
   // CHANGEME
   return timeline;
@@ -87,9 +88,10 @@ function define_testing_timeline(t_array){
     'demo': demo_timeline(),
     'demographic': demo_timeline(),
     'demographics': demo_timeline(),
+    'new': new_timeline(),
     // CHANGEME
   };
-  
+
   t_array.forEach(function(i){timeline.push(timeline_obj[i])});
   return timeline;
 }

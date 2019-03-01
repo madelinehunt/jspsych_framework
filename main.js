@@ -1,14 +1,16 @@
 //////// basic variables
 var subjID = getSubjID(8);
-var study; // = 'mcv/kitchenSink'; CHANGEME
+var study;
 var conds; // example:
-          // var conds = [
-          //   {"cond": "[\"either\",1,0]" },
-          //   {"cond": "[\"either\",1,1]" },
-          // ];
+              // var conds = [
+              //   {"cond": "[\"either\",0,0]" },
+              //   {"cond": "[\"either\",1,1]" },
+              //   {"cond": "[\"either\",0,1]" },
+              //   {"cond": "[\"either\",1,0]" },
+              // ];
           // note: depending on how your conditions are formatted,
           // you may need to modify local_counterbalancing() in functions.js
-var consent_file; // = 'INL_behavioral_consent_45min_online.html'; // CHANGEME
+var consent_file; // = 'INL_behavioral_consent_15min_online.html'; // CHANGEME
 ////////
 
 //////// other expt options
@@ -16,10 +18,16 @@ var consent_file; // = 'INL_behavioral_consent_45min_online.html'; // CHANGEME
 var response_file_suffix; // set to true if you want this option turned on
 
 // optional; if you collect gender and want to write it out to the DB. Variable containing gender should be named "gend".
-var collect_gender; // set to true if you want this option turned on
+var collect_gender = true; // set to true if you want this option turned on
 
 // optional; if you collect political affiliation and want to write it out to the DB. Variable containing political affiliation should be named "poli".
-var collect_pol; // set to true if you want this option turned on
+var collect_pol = true; // set to true if you want this option turned on
+////////
+
+//////// experiment-specific variables
+
+// CHANGEME
+
 ////////
 
 //////// URL vars
@@ -36,17 +44,11 @@ if (document.location.hostname == 'localhost'){ // allows for localhost testing
   var cb_query = local_counterbalancing(conds);
   var log_to_db = false;
 } else {
-  var cb_query = getCounterbalanced(study, 1, undefined)
+  var cb_query = getCounterbalanced(study, 1, undefined);
   var log_to_db = true;
 };
-var cb_id = cb_query.ids[0]
-var condition = cb_query.conds
-////////
-
-//////// experiment-specific variables
-
-// CHANGEME
-
+var cb_id = cb_query.ids[0];
+var condition = cb_query.conds;
 ////////
 
 //////// launching the experiment with timeline from timeline.js
@@ -66,7 +68,7 @@ if (!urlvars.testing) { // defines main (ie non-testing) mode
   };
 
   if (urlvars.timelines) {
-    var t_array = urlvars.timelines.split(',')
+    var t_array = urlvars.timelines.split(',');
     jsPsych.init({
       timeline: define_testing_timeline(t_array),
       on_finish: function() {
