@@ -73,7 +73,6 @@ function define_full_timeline() {
   var timeline = [];
   timeline.push(intro_and_consent_timeline());
   timeline.push(demo_timeline());
-  timeline.push(new_timeline());
   timeline.push(counter_and_debrief_timeline());
   // CHANGEME
   return timeline;
@@ -88,7 +87,6 @@ function define_testing_timeline(t_array){
     'demo': demo_timeline(),
     'demographic': demo_timeline(),
     'demographics': demo_timeline(),
-    'new': new_timeline(),
     // CHANGEME
   };
 
