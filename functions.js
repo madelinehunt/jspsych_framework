@@ -1,11 +1,11 @@
-//// helper functions
+//// misc functions
 function get_randint(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 function sum_array(arr){
   return arr.reduce(function(a, b) { return a + b; }, 0);
-}
+};
 
 function array_drop_elem(arr, elem){
   ret_array = [];
@@ -15,7 +15,7 @@ function array_drop_elem(arr, elem){
     };
   });
   return ret_array;
-}
+};
 
 function coin_flip(){
   var rand = Math.random();
@@ -24,12 +24,7 @@ function coin_flip(){
   } else {
     return 1;
   }
-}
-
-function killall(){
-  jsPsych.endCurrentTimeline();
-  jsPsych.finishTrial();
-}
+};
 
 function array_mean(xarr){
   // dividing by 0 will return Infinity
@@ -54,32 +49,76 @@ function array_mean(xarr){
     avg = 0;
   };
   return avg;
+};
+
+function nrange(size, startAt = 0) {
+    return [...Array(size).keys()].map(i => i + startAt);
+}
+
+// functions needed for jspsych or timeline
+
+function killall(){
+  jsPsych.endCurrentTimeline();
+  jsPsych.finishTrial();
+};
+
+function data_download(filename='jspsych_data.csv'){
+  jsPsych.data.get().readOnly().localSave('CSV',filename)
+};
+
+function copy_default(default_obj){
+  // $.extend( true, {}, a ); // another way of cloning an obj
+  return Object.assign({},default_obj);
+}
+
+function containerize(section){
+  if (!$.isArray(section)) {
+    var type = section['type'];
+    var timeline = [section];
+  } else {
+    var type = section[0]['type'];
+    var timeline = section;
+  }
+  var container = {
+    type: type,
+    timeline: timeline,
+  };
+  return container
 }
 
 //// counterbalancing
 function local_counterbalancing(conds){
   var randomized_localhost_cond = jsPsych.randomization.sampleWithoutReplacement(conds,1)[0];
-  cb_query = {
+  condition_obj = {
     arr: conds,
     conds: [randomized_localhost_cond['cond']],
     finishedArr: array_drop_elem(conds, randomized_localhost_cond),
-    ids: randomized_localhost_cond['id'],
+    ids: 5444,
   };
-  return cb_query;
-}
+  return condition_obj;
+};
 
 //// I/O functions
 function save_data_and_debrief(log_to_db) {
   if (log_to_db){
+    console.log(study);
+    console.log(condition);
+    console.log(cb_id);
     updateCBDB(study, condition, cb_id); // this function is defined in counterbalance.js
   } else {
     console.log('not logging to DB');
   }
+  if (response_file_suffix) {
+    var r_file_sfix = response_file_suffix;
+  } else {
+    var r_file_sfix = '_response';
+  }
+
   var data = jsPsych.data.get().readOnly().csv();
   var params = {
     subjid: subjID,
     studyName: study,
-    name: "_", // CHANGEME
+    name: r_file_sfix,
     toWrite: data,
   }
   $.post("/scripts/latest/save.php", params);
@@ -94,14 +133,21 @@ function save_data_and_debrief(log_to_db) {
     'background-color': 'rgb(255,225,200)'
   }));
 
-
-  $.get('/scripts/latest/log_turker.php', { // change these properies as needed
+  var db_obj = {
     mTurkID: mTurkID,
     subjID: subjID,
     study: study,
     // gender: gend,
     // political_affiliation: poli
-  });
-}
+  };
 
-//// experiment-specific functions
+  if (collect_gender) {
+    db_obj['gender'] = gend;
+  }
+
+  if (collect_pol) {
+    db_obj['political_affiliation'] = poli;
+  }
+
+  $.get('/scripts/latest/log_turker.php', db_obj);
+};

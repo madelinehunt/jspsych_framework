@@ -1,7 +1,7 @@
 //// defining each individual experiment block
 
 // instructions
-function intro_timeline(){
+function intro_and_consent_timeline(){
   var intro_timeline = []
 
   var consent_block = {
@@ -33,50 +33,6 @@ function intro_timeline(){
   return intro_flow;
 }
 
-// survey at the beginning of the experiment
-function survey_timeline(){
-  var survey_timeline = []
-
-  var team_likert_labels = [
-    'strongly disagree',
-    '',
-    '',
-    '',
-    '',
-    '',
-    'strongly agree'
-  ]
-
-  var survey_questions = [
-    'I see myself as someone who does a thorough job.',
-    'I see myself as someone who tends to be quiet.',
-    'I see myself as someone who worries a lot.',
-    'I see myself as someone who has a forgiving nature.',
-    'I see myself as someone who likes to reflect and play with ideas.',
-  ]
-
-  for (var i = 0; i < survey_questions.length; i++) {
-    console.log(i);
-    var cur_q = {prompt: survey_questions[i], labels: team_likert_labels, required: true};
-    console.log(cur_q);
-    var post_selection_survey = {
-      type: 'survey-likert',
-      questions: [cur_q],
-      data: {
-        'question_text': cur_q['prompt'],
-      },
-    };
-    console.log(post_selection_survey);
-    survey_timeline.push(post_selection_survey);
-  }
-
-  var survey = {
-    type: 'survey-likert',
-    timeline: survey_timeline,
-  }
-  return survey
-}
-
 // countermeasures timeline (with optional debriefing)
 function counter_and_debrief_timeline(){
   var counter_timeline = []
@@ -84,7 +40,7 @@ function counter_and_debrief_timeline(){
   var countermeasures = {
     type: "html-counter-response",
     stimulus: '<p>How many <strong>fatal</strong> heart attacks have you had?</p>',
-    choices: [0,1,2,3,4,5,6,7,8,9,10],
+    choices: nrange(11,0),
   };
   counter_timeline.push(countermeasures);
 
@@ -123,37 +79,20 @@ function demo_timeline(){
 
   demo_timeline.push(instructions_demo);
 
-  // defining two different response scales that can be used.
-  var page_1_options = ["Male", "Female", "Other", "Prefer not to answer"];
-  var page_2_options = ["Jewish", "Native American", "Caucasian American", "African American", "Hispanic American", "Arab", "Indian", "Non-Indian Asian", "African", "Other", "Prefer not to answer"];
-
-  var multi_choice_block = {
-    type: 'survey-multi-choice',
-    // show_clickable_nav: true,
-    questions: [
-      {prompt: "Which gender do you most strongly identify with?", options: page_1_options, required:true,},
-      {prompt: "Which ethnic group do you most strongly identify with?", options: page_2_options, required: true}
-    ],
+  var msurv = {
+    type: 'cikara-demographics',
+    // uses all defaults for this plugin
   };
-  demo_timeline.push(multi_choice_block);
+  demo_timeline.push(msurv);
 
-  var survey_trial = {
-    type: 'survey-text',
-    show_clickable_nav: true,
-    questions: [
-      {prompt: "What is your age?", rows: 1, columns: 20},
-    ],
-  };
-  demo_timeline.push(survey_trial);
-
-  var Feedback = {
+  var feedback = {
     type: 'survey-text',
     show_clickable_nav: true,
     questions: [
       {prompt: "Do you have any feedback about this study?", rows: 20, columns: 40},
     ],
   };
-  demo_timeline.push(Feedback);
+  demo_timeline.push(feedback);
 
   var demo_container = {
     type: 'survey-text',
@@ -165,8 +104,7 @@ function demo_timeline(){
 //// pulling together all blocks into final main timeline
 function define_full_timeline() {
   var timeline = [];
-  timeline.push(intro_timeline());
-  timeline.push(survey_timeline());
+  timeline.push(intro_and_consent_timeline());
   timeline.push(demo_timeline());
   timeline.push(counter_and_debrief_timeline());
   // CHANGEME
@@ -176,8 +114,7 @@ function define_full_timeline() {
 function define_testing_timeline(t_array){
   var timeline = [];
   var timeline_obj = {
-    'intro': intro_timeline(),
-    'survey': survey_timeline(),
+    'intro': intro_and_consent_timeline(),
     'counter': counter_and_debrief_timeline(),
     'demo': demo_timeline(),
     'demographic': demo_timeline(),
