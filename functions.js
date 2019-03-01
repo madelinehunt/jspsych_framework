@@ -65,6 +65,14 @@ function data_download(filename='jspsych_data.csv'){
   jsPsych.data.get().readOnly().localSave('CSV',filename)
 };
 
+function get_all_expt_data(){
+  return JSON.parse(jsPsych.data.get().readOnly().json());
+}
+
+function get_last_trial_data(){
+  return JSON.parse(jsPsych.data.get().readOnly().last().json());
+}
+
 //// functions to help in constructing timeline.js
 function copy_default(default_obj){
   // $.extend( true, {}, a ); // another way of cloning an obj
