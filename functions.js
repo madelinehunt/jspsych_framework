@@ -55,8 +55,7 @@ function nrange(size, startAt = 0) {
     return [...Array(size).keys()].map(i => i + startAt);
 }
 
-// functions needed for jspsych or timeline
-
+//// jspsych-specific functions
 function killall(){
   jsPsych.endCurrentTimeline();
   jsPsych.finishTrial();
@@ -66,6 +65,7 @@ function data_download(filename='jspsych_data.csv'){
   jsPsych.data.get().readOnly().localSave('CSV',filename)
 };
 
+//// functions to help in constructing timeline.js
 function copy_default(default_obj){
   // $.extend( true, {}, a ); // another way of cloning an obj
   return Object.assign({},default_obj);
