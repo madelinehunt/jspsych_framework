@@ -83,13 +83,22 @@ function containerize(section){
   if (!$.isArray(section)) {
     var type = section['type'];
     var timeline = [section];
+    data = {};
   } else {
     var type = section[0]['type'];
     var timeline = section;
+    if (typeof(section['data'])!= 'undefined') {
+      data = section['data'];
+    } else {
+      data = {};
+    }
   }
+  data['plugin_parameters_backup'] = JSON.stringify(section);
+
   var container = {
     type: type,
     timeline: timeline,
+    data: data,
   };
   return container
 }
