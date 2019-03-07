@@ -79,7 +79,7 @@ function copy_default(default_obj){
   return Object.assign({},default_obj);
 }
 
-function containerize(section){
+function containerize(section, backup=true){
   if (!$.isArray(section)) {
     var type = section['type'];
     var timeline = [section];
@@ -93,13 +93,21 @@ function containerize(section){
       data = {};
     }
   }
-  data['plugin_parameters_backup'] = JSON.stringify(section);
+  if (backup){
+    data['plugin_parameters_backup'] = JSON.stringify(section);
+    var container = {
+      type: type,
+      timeline: timeline,
+      data: data,
+    };
+  } else {
+    var container = {
+      type: type,
+      timeline: timeline,
+    };
+  }
 
-  var container = {
-    type: type,
-    timeline: timeline,
-    data: data,
-  };
+
   return container
 }
 
