@@ -83,23 +83,31 @@ function containerize(section, backup=true){
   if (!$.isArray(section)) {
     var type = section['type'];
     var timeline = [section];
-    data = {};
   } else {
     var type = section[0]['type'];
     var timeline = section;
-    if (typeof(section['data'])!= 'undefined') {
-      data = section['data'];
-    } else {
-      data = {};
-    }
   }
+
   if (backup){
-    data['plugin_parameters_backup'] = JSON.stringify(section);
+
+    for (var i = 0; i < timeline.length; i++) {
+      var cur_params = timeline[i];
+      var backup = JSON.stringify(cur_params);
+      if (typeof(cur_params['data'])!= 'undefined') {
+        data = cur_params['data'];
+      } else {
+        data = {};
+      }
+      data['plugin_parameters_backup'] = backup;
+      timeline[i]['data'] = data;
+    }
+
     var container = {
       type: type,
       timeline: timeline,
       data: data,
     };
+
   } else {
     var container = {
       type: type,
@@ -107,10 +115,8 @@ function containerize(section, backup=true){
     };
   }
 
-
   return container
 }
-
 //// counterbalancing
 function local_counterbalancing(conds){
   var randomized_localhost_cond = jsPsych.randomization.sampleWithoutReplacement(conds,1)[0];
