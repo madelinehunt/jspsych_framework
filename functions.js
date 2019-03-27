@@ -51,6 +51,13 @@ function array_mean(xarr){
   return avg;
 };
 
+function shuffleTogether(arrs) {
+    arrs = arrs.transpose();
+    arrs.shuffle();
+    arrs = arrs.transpose();
+    return arrs;
+}
+
 function nrange(size, startAt = 0) {
     return [...Array(size).keys()].map(i => i + startAt);
 }
@@ -71,6 +78,20 @@ function get_all_expt_data(){
 
 function get_last_trial_data(){
   return JSON.parse(jsPsych.data.get().readOnly().last().json());
+}
+
+function data_lookup_univ_value(pname){
+  var data = JSON.parse(jsPsych.data.get().readOnly().json());
+  var filt = data.filter(el => pname in el);
+  var lookup = filt[0][pname];
+  return lookup;
+}
+
+function data_lookup_by_trialtype(pname, trialtype){
+  var data = JSON.parse(jsPsych.data.get().readOnly().json());
+  var filt = data.filter(el => el.trial_type == trialtype && pname in el);
+  var lookup = filt[0][pname];
+  return lookup;
 }
 
 //// functions to help in constructing timeline.js
@@ -117,6 +138,7 @@ function containerize(section, backup=true){
 
   return container
 }
+
 //// counterbalancing
 function local_counterbalancing(conds){
   var randomized_localhost_cond = jsPsych.randomization.sampleWithoutReplacement(conds,1)[0];
