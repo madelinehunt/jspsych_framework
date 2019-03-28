@@ -63,6 +63,14 @@ function nrange(size, startAt = 0) {
 }
 
 //// jspsych-specific functions
+function disable_continue_button(){
+  $('.jspsych-btn').attr('disabled', 'disabled');
+}
+
+function enable_continue_button(){
+  $('.jspsych-btn').attr('disabled', null);
+}
+
 function killall(){
   jsPsych.endCurrentTimeline();
   jsPsych.finishTrial();
