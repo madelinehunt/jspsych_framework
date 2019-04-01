@@ -102,20 +102,19 @@ function data_lookup_by_trialtype(pname, trialtype){
   return lookup;
 }
 
-function preserve_partial_data(e){
-  e.preventDefault();
-  var data = jsPsych.data.get().readOnly().csv();
-
-  var params = {
-    subjid: subjID,
-    studyName: study,
-    folder: 'partial_data',
-    name: '_partial_data',
-    toWrite: data,
-  }
-  $.post("/scripts/latest/save.php", params);
-
-  return "If you navigate away from this page, you will lose your progress and you may not get paid. Are you sure you want to proceed?";
+function jspsych_data_filter(filter_function){
+  // // filter function should look like this:
+  // function cons_lookup(item){
+  //   if (item.trial_type == 'slider-require-response' && item.policy == target_statement && item.question == 'consensus'){
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
+  
+  var data = get_all_expt_data();
+  var filt = data.filter(filter_function);
+  return filt;
 }
 
 //// functions to help in constructing timeline.js
@@ -176,6 +175,22 @@ function local_counterbalancing(conds){
 };
 
 //// I/O functions
+function preserve_partial_data(e){
+  e.preventDefault();
+  var data = jsPsych.data.get().readOnly().csv();
+
+  var params = {
+    subjid: subjID,
+    studyName: study,
+    folder: 'partial_data',
+    name: '_partial_data',
+    toWrite: data,
+  }
+  $.post("/scripts/latest/save.php", params);
+
+  return "If you navigate away from this page, you will lose your progress and you may not get paid. Are you sure you want to proceed?";
+}
+
 function save_data_and_debrief(log_to_db) {
   if (log_to_db){
     console.log(study);

@@ -1,4 +1,4 @@
-// template version 1.2.6
+// template version 1.2.7
 //////// basic variables
 var subjID = getSubjID(8);
 var study;
