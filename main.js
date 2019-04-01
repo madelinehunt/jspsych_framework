@@ -1,7 +1,7 @@
 // template version 1.3
 
 //////// basic variables
-var subjID = getSubjID(8);
+var subjID = getSubjID(8); // defined in funcs.js
 var study;
 var conds; // example:
               // var conds = [
@@ -50,7 +50,7 @@ if (document.location.hostname == 'localhost'){ // allows for localhost testing
   var cb_query = local_counterbalancing(conds);
   var log_to_db = false;
 } else {
-  var cb_query = getCounterbalanced(study, 1, undefined);
+  var cb_query = getCounterbalanced(study, 1, undefined); // defined in funcs.js
   var log_to_db = true;
 };
 var cb_id = cb_query.ids[0];
