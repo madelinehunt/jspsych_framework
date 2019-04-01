@@ -102,6 +102,22 @@ function data_lookup_by_trialtype(pname, trialtype){
   return lookup;
 }
 
+function preserve_partial_data(e){
+  e.preventDefault();
+  var data = jsPsych.data.get().readOnly().csv();
+
+  var params = {
+    subjid: subjID,
+    studyName: study,
+    folder: 'partial_data',
+    name: '_partial_data',
+    toWrite: data,
+  }
+  $.post("/scripts/latest/save.php", params);
+
+  return "If you navigate away from this page, you will lose your progress and you may not get paid. Are you sure you want to proceed?";
+}
+
 //// functions to help in constructing timeline.js
 function copy_default(default_obj){
   // $.extend( true, {}, a ); // another way of cloning an obj

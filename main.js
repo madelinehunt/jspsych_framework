@@ -1,3 +1,4 @@
+// template version 1.2.6
 //////// basic variables
 var subjID = getSubjID(8);
 var study;
@@ -15,13 +16,17 @@ var consent_file; // = 'INL_behavioral_consent_15min_online.html'; // CHANGEME
 
 //////// other expt options
 // optional; if you want to have response file to have a filename suffix
-var response_file_suffix; // set to true if you want this option turned on
+var response_file_suffix; // set this to a string for the suffix, if wanted
 
 // optional; if you collect gender and want to write it out to the DB. Variable containing gender should be named "gend".
 var collect_gender = true; // set to true if you want this option turned on
 
 // optional; if you collect political affiliation and want to write it out to the DB. Variable containing political affiliation should be named "poli".
 var collect_pol = true; // set to true if you want this option turned on
+
+// if true, this will prevent people from reloading or closing the page. A confirmation box will appear,
+// and while it's onscreen the subject data will be written out to a subdirectory named 'partial_data'.
+var capture_partial_data = true;
 ////////
 
 //////// experiment-specific variables
@@ -54,6 +59,9 @@ var condition = cb_query.conds;
 //////// launching the experiment with timeline from timeline.js
 if (!urlvars.testing) { // defines main (ie non-testing) mode
   var testing = false;
+  if (capture_partial_data){
+    $(window).on('beforeunload', preserve_partial_data);
+  }
   jsPsych.init({
     timeline: define_full_timeline(),
     on_finish: function(){
