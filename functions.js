@@ -111,13 +111,13 @@ function jspsych_data_filter(filter_function){
   //     return false;
   //   }
   // };
-  
+
   var data = get_all_expt_data();
   var filt = data.filter(filter_function);
   return filt;
 }
 
-//// functions to help in constructing timeline.js
+//// functions to help in constructing the timeline
 function copy_default(default_obj){
   // $.extend( true, {}, a ); // another way of cloning an obj
   return Object.assign({},default_obj);
@@ -161,6 +161,45 @@ function containerize(section, backup=true){
 
   return container
 }
+
+function init_experiment(){
+  // this depends on lots of global variables, so make sure they exist
+  if (!urlvars.testing) { // defines main (ie non-testing) mode
+    var testing = false;
+    if (capture_partial_data){
+      $(window).on('beforeunload', preserve_partial_data);
+    }
+    jsPsych.init({
+      timeline: define_full_timeline(),
+      on_finish: function(){
+        save_data_and_debrief(log_to_db);
+      },
+    });
+  } else { // defines testing mode
+    var testing = true;
+
+    if (urlvars.timeline) { // helpful if tester types 'timelines' instead of 'timeline'
+      urlvars.timelines = urlvars.timeline;
+    };
+
+    if (urlvars.timelines) {
+      var t_array = urlvars.timelines.split(',');
+      jsPsych.init({
+        timeline: define_testing_timeline(t_array),
+        on_finish: function() {
+          jsPsych.data.displayData();
+        }
+      });
+    } else { // if no 'timeline' urlvar in testing mode, do full timeline
+      jsPsych.init({
+        timeline: define_full_timeline(),
+        on_finish: function() {
+          jsPsych.data.displayData();
+        }
+      });
+    }
+  }
+};
 
 //// counterbalancing
 function local_counterbalancing(conds){

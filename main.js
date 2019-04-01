@@ -1,4 +1,5 @@
-// template version 1.2.7
+// template version 1.3
+
 //////// basic variables
 var subjID = getSubjID(8);
 var study;
@@ -57,39 +58,5 @@ var condition = cb_query.conds;
 ////////
 
 //////// launching the experiment with timeline from timeline.js
-if (!urlvars.testing) { // defines main (ie non-testing) mode
-  var testing = false;
-  if (capture_partial_data){
-    $(window).on('beforeunload', preserve_partial_data);
-  }
-  jsPsych.init({
-    timeline: define_full_timeline(),
-    on_finish: function(){
-      save_data_and_debrief(log_to_db);
-    },
-  });
-} else { // defines testing mode
-  var testing = true;
-
-  if (urlvars.timeline) { // helpful if tester types 'timelines' instead of 'timeline'
-    urlvars.timelines = urlvars.timeline;
-  };
-
-  if (urlvars.timelines) {
-    var t_array = urlvars.timelines.split(',');
-    jsPsych.init({
-      timeline: define_testing_timeline(t_array),
-      on_finish: function() {
-        jsPsych.data.displayData();
-      }
-    });
-  } else { // if no 'timeline' urlvar in testing mode, do full timeline
-    jsPsych.init({
-      timeline: define_full_timeline(),
-      on_finish: function() {
-        jsPsych.data.displayData();
-      }
-    });
-  }
-}
+init_experiment(); // defined in functions.js, though you shouldn't need to mess with it
 ////////
