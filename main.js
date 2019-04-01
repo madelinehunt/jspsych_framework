@@ -1,8 +1,8 @@
-// template version 1.3
+// template version 1.3.1
 
 //////// basic variables
 var subjID = getSubjID(8); // defined in funcs.js
-var study;
+var study; // CHANGEME // e.g. 'your_initials/expt_name'
 var conds; // example:
               // var conds = [
               //   {"cond": "[\"either\",0,0]" },
@@ -12,7 +12,7 @@ var conds; // example:
               // ];
           // note: depending on how your conditions are formatted,
           // you may need to modify local_counterbalancing() in functions.js
-var consent_file; // = 'INL_behavioral_consent_15min_online.html'; // CHANGEME
+var consent_file; // CHANGEME // e.g. 'INL_behavioral_consent_15min_online.html';
 ////////
 
 //////// other expt options
