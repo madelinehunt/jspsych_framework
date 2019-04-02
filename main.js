@@ -1,8 +1,8 @@
-// template version 1.4
+// template version 1.4.1
 
 //////// basic variables
 var subjID = getSubjID(8); // defined in funcs.js
-var study; // CHANGEME // e.g. 'your_initials/expt_name'
+var study; // CHANGEME // e.g. 'YourInitials/expt_name'
 var conds; // example:
               // var conds = [
               //   {"cond": "[\"either\",0,0]" },
@@ -19,14 +19,17 @@ var consent_file; // CHANGEME // e.g. 'INL_behavioral_consent_15min_online.html'
 // optional; if you want to have response file to have a filename suffix
 var response_file_suffix; // set this to a string for the suffix, if wanted
 
-// optional; if you collect gender and want to write it out to the DB. Variable containing gender should be named "gend".
+// optional; if you collect gender and want to write it out to the DB.
+// Variable containing gender should be named "gend".
 var collect_gender = true; // set to true if you want this option turned on
 
-// optional; if you collect political affiliation and want to write it out to the DB. Variable containing political affiliation should be named "poli".
+// optional; if you collect political affiliation and want to write it out to the DB.
+// Variable containing political affiliation should be named "poli".
 var collect_pol = true; // set to true if you want this option turned on
 
-// if true, this will prevent people from reloading or closing the page. A confirmation box will appear,
+// if true, this will prevent participants from reloading or closing the page. A confirmation box will appear,
 // and while it's onscreen the subject data will be written out to a subdirectory named 'partial_data'.
+// The participant will be able to close the confirmation box, and with it the expt window, but we'll have the data.
 var capture_partial_data = true;
 ////////
 
