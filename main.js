@@ -1,4 +1,4 @@
-// template version 1.3.1
+// template version 1.4
 
 //////// basic variables
 var subjID = getSubjID(8); // defined in funcs.js
@@ -38,10 +38,20 @@ var capture_partial_data = true;
 
 //////// URL vars
 var urlvars = jsPsych.data.urlVariables();
+if (urlvars.timeline) { // helpful if tester types 'timelines' instead of 'timeline'
+  urlvars.timelines = urlvars.timeline;
+};
+
 if (urlvars['MID']) {
   var mTurkID = urlvars['MID'];
 } else {
   var mTurkID = 'TESTING_MID'
+}
+
+if (urlvars['testing'] || urlvars['test']) {
+  var testing = true;
+} else {
+  var testing = false;
 }
 ////////
 
@@ -58,5 +68,11 @@ var condition = cb_query.conds;
 ////////
 
 //////// launching the experiment with timeline from timeline.js
-init_experiment(); // defined in functions.js, though you shouldn't need to mess with it
+if (testing && urlvars.timelines) {
+  var timeline: define_testing_timeline(urlvars.timelines.split(','));
+} else {
+  var timeline = define_full_timeline();
+}
+
+init_experiment(timeline); // defined in functions.js, though you shouldn't need to mess with it
 ////////

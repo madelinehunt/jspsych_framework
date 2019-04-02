@@ -43,43 +43,44 @@ function containerize(section, backup=true){
   return container
 }
 
-function init_experiment(){
+function init_experiment(timeline){
   // this depends on lots of global variables, so make sure they exist
-  if (!urlvars.testing) { // defines main (ie non-testing) mode
-    var testing = false;
+  if (!testing) { // defines main (ie non-testing) mode
     if (capture_partial_data){
       $(window).on('beforeunload', preserve_partial_data);
     }
     jsPsych.init({
-      timeline: define_full_timeline(),
+      timeline: timeline,
       on_finish: function(){
         save_data_and_debrief(log_to_db);
       },
     });
   } else { // defines testing mode
-    var testing = true;
-
-    if (urlvars.timeline) { // helpful if tester types 'timelines' instead of 'timeline'
-      urlvars.timelines = urlvars.timeline;
-    };
-
-    if (urlvars.timelines) {
-      var t_array = urlvars.timelines.split(',');
-      jsPsych.init({
-        timeline: define_testing_timeline(t_array),
-        on_finish: function() {
-          jsPsych.data.displayData();
-        }
-      });
-    } else { // if no 'timeline' urlvar in testing mode, do full timeline
-      jsPsych.init({
-        timeline: define_full_timeline(),
-        on_finish: function() {
-          jsPsych.data.displayData();
-        }
-      });
-    }
+    jsPsych.init({
+      timeline: timeline,
+      on_finish: function() {
+        jsPsych.data.displayData();
+      }
+    });
   }
+  //   if (urlvars.timelines) {
+  //     var t_array = urlvars.timelines.split(',');
+  //     jsPsych.init({
+  //       timeline: define_testing_timeline(t_array),
+  //       on_finish: function() {
+  //         jsPsych.data.displayData();
+  //       }
+  //     });
+  //   } else { // if no 'timeline' urlvar in testing mode, do full timeline
+  //     jsPsych.init({
+  //       timeline: define_full_timeline(),
+  //       on_finish: function() {
+  //         jsPsych.data.displayData();
+  //       }
+  //     });
+  //   }
+  //
+  // }
 };
 
 //// I/O functions
