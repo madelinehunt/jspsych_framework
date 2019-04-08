@@ -29,4 +29,9 @@ var countermeasures_default = {
   type: "html-counter-response",
   stimulus: '<p>How many <strong>fatal</strong> heart attacks have you had?</p>',
   choices: nrange(11,0),
+  on_finish: function(){
+    // TODO add function to save participant data to subdirectory of "failed_heart_attack_test"
+    // will probabaly also have to update save_data_and_debrief() in some way
+    console.log('todo!');
+  }
 };

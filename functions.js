@@ -1,7 +1,7 @@
 //// functions to help in constructing the timeline
 function copy_default(default_obj){
-  // $.extend( true, {}, a ); // another way of cloning an obj
-  return Object.assign({},default_obj);
+  return $.extend( true, {}, default_obj );
+  // return Object.assign({},default_obj);
 }
 
 function containerize(section, backup=true){
