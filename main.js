@@ -1,4 +1,4 @@
-// template version 1.4.1
+// template version 1.4.2
 
 //////// basic variables
 var subjID = getSubjID(8); // defined in funcs.js
@@ -72,7 +72,7 @@ var condition = cb_query.conds;
 
 //////// launching the experiment with timeline from timeline.js
 if (testing && urlvars.timelines) {
-  var timeline: define_testing_timeline(urlvars.timelines.split(','));
+  var timeline = define_testing_timeline(urlvars.timelines.split(','));
 } else {
   var timeline = define_full_timeline();
 }
