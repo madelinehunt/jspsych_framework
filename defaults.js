@@ -31,7 +31,7 @@ var countermeasures_default = {
   choices: nrange(11,0),
   on_finish: function(){
     // TODO add function to save participant data to subdirectory of "failed_heart_attack_test"
-    // will probabaly also have to update save_data_and_debrief() in some way
+    // will probabaly also have to update save_data_and_show_code() in some way
     console.log('todo!');
   }
 };
