@@ -1,4 +1,4 @@
-// template version 1.4.2
+// template version 1.6
 
 //////// basic variables
 var subjID = getSubjID(8); // defined in funcs.js
@@ -13,6 +13,8 @@ var conds; // example:
           // note: depending on how your conditions are formatted,
           // you may need to modify local_counterbalancing() in functions.js
 var consent_file; // CHANGEME // e.g. 'INL_behavioral_consent_15min_online.html';
+
+var debrief_file; // CHANGEME // e.g. '/scripts/consent/INL_debriefing_NoDeception.html';
 ////////
 
 //////// other expt options

@@ -35,3 +35,17 @@ var countermeasures_default = {
     console.log('todo!');
   }
 };
+
+// debrief trial
+var debrief_default = {
+  type:'instructions',
+  show_clickable_nav: true,
+  allow_keys: false,
+  pages: function(){
+    return [window.get_debrief.responseText];
+  },
+  on_load: function(){
+    $('#jspsych-content div').not('.jspsych-instructions-nav').css('text-align','left');
+    $('#jspsych-content div > blockquote').css('margin-left', '8%');
+  },
+}

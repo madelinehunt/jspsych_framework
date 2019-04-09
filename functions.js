@@ -44,13 +44,34 @@ function containerize(section, backup=true){
 }
 
 function init_experiment(timeline){
-  // this depends on lots of global variables, so make sure they exist
+  // this function depends on lots of global variables, so make sure they exist
+
+  // defaults to NoDeception debriefing
+  var debrief_url = (debrief_file) ? debrief_file : '/scripts/consent/INL_debriefing_NoDeception.html';
+  window.get_debrief = $.get(debrief_url);
+
+  function trial_finish_handler(data){
+    // finishes the data backup started in containerize()
+    if (data.hasOwnProperty('plugin_parameters_backup')) {
+      var backup_obj = {};
+      backup_obj['pre_init'] = data['plugin_parameters_backup'];
+
+      var dd = $.extend(true, {}, data);
+      delete dd['plugin_parameters_backup'];
+      backup_obj['post_init'] = JSON.stringify(dd);
+
+      jsPsych.data.get().addToLast({'plugin_parameters_backup': JSON.stringify(backup_obj)});
+    }
+
+  }
+
   if (!testing) { // defines main (ie non-testing) mode
     if (capture_partial_data){
       $(window).on('beforeunload', preserve_partial_data);
     }
     jsPsych.init({
       timeline: timeline,
+      on_trial_finish: trial_finish_handler,
       on_finish: function(){
         save_data_and_debrief(log_to_db);
       },
@@ -58,29 +79,12 @@ function init_experiment(timeline){
   } else { // defines testing mode
     jsPsych.init({
       timeline: timeline,
+      on_trial_finish: trial_finish_handler,
       on_finish: function() {
         jsPsych.data.displayData();
       }
     });
   }
-  //   if (urlvars.timelines) {
-  //     var t_array = urlvars.timelines.split(',');
-  //     jsPsych.init({
-  //       timeline: define_testing_timeline(t_array),
-  //       on_finish: function() {
-  //         jsPsych.data.displayData();
-  //       }
-  //     });
-  //   } else { // if no 'timeline' urlvar in testing mode, do full timeline
-  //     jsPsych.init({
-  //       timeline: define_full_timeline(),
-  //       on_finish: function() {
-  //         jsPsych.data.displayData();
-  //       }
-  //     });
-  //   }
-  //
-  // }
 };
 
 //// I/O functions
