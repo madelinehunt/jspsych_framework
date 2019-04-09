@@ -4,7 +4,7 @@
 - [ ] change basic variables in main.js
 - [ ] define add'l defaults in defaults.js
 - [ ] update local_counterbalancing() function in functions.js if needed
-- [ ] update save_data_and_debrief() in functions.js if needed
+- [ ] update save_data_and_show_code() in functions.js if needed
 - [ ] add custom variables for your experiment (e.g. randomized survey questions, # of main task trials, etc.)
 
 #### timeline.js: ####

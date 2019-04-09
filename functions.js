@@ -73,7 +73,7 @@ function init_experiment(timeline){
       timeline: timeline,
       on_trial_finish: trial_finish_handler,
       on_finish: function(){
-        save_data_and_debrief(log_to_db);
+        save_data_and_show_code(log_to_db);
       },
     });
   } else { // defines testing mode
@@ -104,7 +104,7 @@ function preserve_partial_data(e){
   return "If you navigate away from this page, you will lose your progress and you may not get paid. Are you sure you want to proceed?";
 }
 
-function save_data_and_debrief(log_to_db) {
+function save_data_and_show_code(log_to_db) {
   if (log_to_db){
     console.log(study);
     console.log(condition);
