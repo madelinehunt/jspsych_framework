@@ -1,4 +1,4 @@
-// template version 1.6.1
+// template version 1.6.2
 
 //////// basic variables
 var subjID = getSubjID(8); // defined in funcs.js

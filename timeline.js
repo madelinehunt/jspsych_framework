@@ -50,22 +50,7 @@ function counter_and_debrief_timeline(){
   var countermeasures = copy_default(countermeasures_default);
   counter_timeline.push(countermeasures);
 
-  //// debriefing trial:
-  // var debrief = {
-  //   type: 'external-html',
-  //   on_start: function(){
-  //     $('#jspsych-content').css({'text-align':'left'});
-  //     $('jspsych-btn').css({'text-align':'center'});
-  //   },
-  //   url: '/scripts/latest/consent/debriefing_mcv_kitchensink.html', // CHANGEME
-  //   cont_btn: "go_button",
-  //   data: {'part_of_expt':'debrief'},
-  //   on_finish: function(){
-  //     $('#jspsych-content').css({'text-align':'center'});
-  //   },
-  // };
-  
-
+  var debrief = copy_default(debrief_default);
   counter_timeline.push(debrief);
 
   return containerize(counter_timeline);
